@@ -1,6 +1,6 @@
 {
   "name": "productbuilder-week1",
-  "description": "행운의 로또 6/45 번호 추첨기 - 실시간 볼 추첨 애니메이션, 5게임 자동 생성, 고정수/제외수 필터 및 통계 분석",
+  "description": "Google Teachable Machine AI 모델을 활용한 인공지능 동물상 테스트 - 사진으로 강아지상과 고양이상 확률 및 성향을 실시간 분석합니다.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
