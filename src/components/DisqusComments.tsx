@@ -4,7 +4,6 @@ import {
   Send,
   Heart,
   Sparkles,
-  ExternalLink,
   Trash2,
   CheckCircle2,
 } from 'lucide-react';
@@ -22,31 +21,31 @@ interface LocalComment {
 const DEFAULT_COMMENTS: LocalComment[] = [
   {
     id: 'default-1',
-    nickname: '인생역전가즈아',
-    emoji: '🍀',
-    content: '이번 주 1141회 황금 밸런스 필터로 5게임 뽑아서 방금 복권방 다녀왔습니다! 다들 1등 기운 받아가세요~',
+    nickname: '댕댕이러버',
+    emoji: '🐶',
+    content: '친구들이 맨날 강아지상이라 했는데 AI 분석에서도 멍뭉미 91% 나왔어요 ㅋㅋㅋ 완전 신기하고 정확하네요!',
     timestamp: '방금 전',
-    likes: 12,
+    likes: 14,
   },
   {
     id: 'default-2',
-    nickname: '로또박사77',
-    emoji: '💰',
-    content: '고정수로 7번, 21번 넣고 돌렸는데 번호 분배가 기가 막히네요. 이번엔 진짜 느낌 좋습니다!',
-    timestamp: '15분 전',
-    likes: 8,
+    nickname: '시크냥이',
+    emoji: '🐱',
+    content: '평소에 눈매 올라갔다는 말 자주 듣는데 고양이상 84% 나왔네요 ㅎㅎ 제니 사진 넣었더니 고양이상 98% 나옴 대박!',
+    timestamp: '20분 전',
+    likes: 9,
   },
   {
     id: 'default-3',
-    nickname: '행운요정',
-    emoji: '🎯',
-    content: '볼 추첨 머신으로 하나씩 뽑히는 애니메이션 보니까 진짜 로또 방송 보는 것처럼 두근거리네요 ㅋㅋㅋ 대박 나세요!',
+    nickname: '민트초코',
+    emoji: '🐾',
+    content: '카메라로 셀카 바로 찍어서 테스트하니까 1초 만에 바로 나와서 꿀잼이에요! 친구들 단톡방에 바로 공유했습니다~',
     timestamp: '1시간 전',
-    likes: 19,
+    likes: 21,
   },
 ];
 
-const EMOJI_OPTIONS = ['🍀', '💰', '🎯', '🏆', '✨', '🔥'];
+const EMOJI_OPTIONS = ['🐶', '🐱', '🐾', '✨', '💖', '🔥'];
 
 interface DisqusCommentsProps {
   url?: string;
@@ -56,15 +55,15 @@ interface DisqusCommentsProps {
 
 export const DisqusComments: React.FC<DisqusCommentsProps> = ({
   url,
-  identifier = 'lotto-645-main',
-  title = '로또 6/45 행운의 번호 추첨기',
+  identifier = 'animal-face-test-main',
+  title = '인공지능 동물상 테스트 | 강아지상 vs 고양이상',
 }) => {
   // Tab: 'board' (Immediate typing) vs 'disqus' (Original Disqus widget)
   const [activeTab, setActiveTab] = useState<'board' | 'disqus'>('board');
 
   // Local comments state
   const [comments, setComments] = useState<LocalComment[]>(() => {
-    const saved = localStorage.getItem('lotto_local_comments');
+    const saved = localStorage.getItem('animal_face_comments');
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -76,7 +75,7 @@ export const DisqusComments: React.FC<DisqusCommentsProps> = ({
   });
 
   const [likedMap, setLikedMap] = useState<Record<string, boolean>>(() => {
-    const saved = localStorage.getItem('lotto_comments_liked');
+    const saved = localStorage.getItem('animal_face_comments_liked');
     if (saved) {
       try {
         return JSON.parse(saved);
@@ -89,17 +88,17 @@ export const DisqusComments: React.FC<DisqusCommentsProps> = ({
 
   // Form states
   const [nickname, setNickname] = useState('');
-  const [selectedEmoji, setSelectedEmoji] = useState('🍀');
+  const [selectedEmoji, setSelectedEmoji] = useState('🐶');
   const [content, setContent] = useState('');
   const [showSuccessBadge, setShowSuccessBadge] = useState(false);
 
   // Save comments to localStorage
   useEffect(() => {
-    localStorage.setItem('lotto_local_comments', JSON.stringify(comments));
+    localStorage.setItem('animal_face_comments', JSON.stringify(comments));
   }, [comments]);
 
   useEffect(() => {
-    localStorage.setItem('lotto_comments_liked', JSON.stringify(likedMap));
+    localStorage.setItem('animal_face_comments_liked', JSON.stringify(likedMap));
   }, [likedMap]);
 
   // Disqus Embed Script Loader
@@ -147,7 +146,7 @@ export const DisqusComments: React.FC<DisqusCommentsProps> = ({
     e.preventDefault();
     if (!content.trim()) return;
 
-    const finalNickname = nickname.trim() || '행운의 방문자';
+    const finalNickname = nickname.trim() || '행운의 참가자';
     const now = new Date();
     const timeStr = `${now.getMonth() + 1}/${now.getDate()} ${now.getHours().toString().padStart(2, '0')}:${now
       .getMinutes()
@@ -213,10 +212,10 @@ export const DisqusComments: React.FC<DisqusCommentsProps> = ({
           </div>
           <div>
             <h2 className="text-base sm:text-lg font-bold text-slate-900 dark:text-slate-100">
-              댓글 & 행운 나눔 공간
+              댓글 & 결과 나눔 공간
             </h2>
             <p className="text-xs text-slate-500 dark:text-slate-400">
-              로그인 없이 즉시 응원 한마디나 뽑은 번호를 자유롭게 남겨보세요!
+              로그인 없이 즉시 자신의 동물상 결과나 감상평을 남겨보세요!
             </p>
           </div>
         </div>
@@ -234,7 +233,7 @@ export const DisqusComments: React.FC<DisqusCommentsProps> = ({
                 : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200'
             }`}
           >
-            🍀 실시간 행운 게시판 ({comments.length})
+            🐾 실시간 후기 게시판 ({comments.length})
           </button>
           <button
             onClick={() => {
@@ -252,7 +251,7 @@ export const DisqusComments: React.FC<DisqusCommentsProps> = ({
         </div>
       </div>
 
-      {/* Tab 1: Live Interactive Comment Board (100% works immediately without login restrictions) */}
+      {/* Tab 1: Live Interactive Comment Board */}
       {activeTab === 'board' && (
         <div className="flex flex-col gap-6">
           {/* Write Comment Form */}
@@ -269,7 +268,7 @@ export const DisqusComments: React.FC<DisqusCommentsProps> = ({
                   maxLength={15}
                   value={nickname}
                   onChange={(e) => setNickname(e.target.value)}
-                  placeholder="예: 1등당첨자 (미입력시 자동)"
+                  placeholder="예: 댕댕이상 (미입력시 자동)"
                   className="px-3 py-1.5 text-xs rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 w-44"
                 />
               </div>
@@ -277,7 +276,7 @@ export const DisqusComments: React.FC<DisqusCommentsProps> = ({
               {/* Emoji Selector */}
               <div className="flex items-center gap-1.5">
                 <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 mr-1">
-                  행운 아이콘:
+                  동물 이모지:
                 </span>
                 {EMOJI_OPTIONS.map((emoji) => (
                   <button
@@ -307,7 +306,7 @@ export const DisqusComments: React.FC<DisqusCommentsProps> = ({
                 maxLength={300}
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                placeholder="이번 주 당첨 기원 응원 메시지나 추천 번호 조합을 남겨보세요! (예: 이번 1141회 1등 가즈아~)"
+                placeholder="당신의 동물상 테스트 결과나 감상평을 자유롭게 남겨보세요! (예: 멍뭉미 85% 나왔습니다 ㅎㅎ)"
                 className="w-full px-3.5 py-2.5 text-xs rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none transition-colors"
               />
               <span className="absolute bottom-2.5 right-3 text-[10px] text-slate-400 font-mono">
@@ -411,7 +410,7 @@ export const DisqusComments: React.FC<DisqusCommentsProps> = ({
             <div className="space-y-1">
               <p className="font-bold">Disqus 위젯 사용 안내</p>
               <p className="text-[11px] leading-relaxed text-amber-700 dark:text-amber-400">
-                Disqus 댓글창은 제3자 쿠키 허용 및 Disqus 계정 로그인이 필요합니다. 브라우저에서 쿠키나 팝업이 차단된 경우 상단의 <b>[🍀 실시간 행운 게시판]</b> 탭을 이용하시면 로그인 없이 즉시 댓글을 등록하실 수 있습니다.
+                Disqus 댓글창은 제3자 쿠키 허용 및 Disqus 계정 로그인이 필요합니다. 브라우저에서 쿠키나 팝업이 차단된 경우 상단의 <b>[🐾 실시간 후기 게시판]</b> 탭을 이용하시면 로그인 없이 즉시 후기를 등록하실 수 있습니다.
               </p>
             </div>
           </div>
